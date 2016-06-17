@@ -8,14 +8,14 @@ getestet mit Windows 7 und cmd.exe mit deutscher Sprach-Umgebung
 // you can find manual and comments in the script  
 // tested with Windows 7 and cmd.exe with German environment
 
-## Umwandlung aller jpg-Dateien innerhalb eines Ordners in:
+## Umwandlung aller jpg-Dateien innerhalb eines Ordners in: // processing all jpg-files in a folder
  - /medium  500px breit // fixed width, default: 500px
  - /large   1000px breit // fixed width, default: 1000px
  - /thumbs  150 x 150px Thumbnails
  - folder-name.md-Datei mit Galerieliste
  - folder-name.yml-Datei mit Galerieliste
 
-## Voraussetzungen:
+## Voraussetzungen: // requirements
  - NConvert ist auf dem Computer vorhanden Download hier: http://www.xnview.com/de/nconvert/
  - Lege einen Ordner mit dem Namen des Fotoalbums an, z. B. "Urlaub in Prag".
    - Erstelle in diesem Ordner den Ordner "original" und lege dort alle Original-Bilder ab
@@ -28,6 +28,7 @@ getestet mit Windows 7 und cmd.exe mit deutscher Sprach-Umgebung
 
 ### So sieht die Ordnerstruktur dann aus: // folder structure
 
+```
  Urlaub in Prag/
  +-- original/
  |   +-- bild01.jpg
@@ -35,13 +36,15 @@ getestet mit Windows 7 und cmd.exe mit deutscher Sprach-Umgebung
  |   +-- bild99.jpg
  +-- convert.bat
  +-- watermark.png
+```
 
-Jetzt starte die Datei "convert.bat". Der Rest passiert automatisch.
-// Start "convert.bat" for automatic processing
+Jetzt starte die Datei `convert.bat`. Der Rest passiert automatisch.
+// Start `convert.bat` for automatic processing
 
 
 ## to do
 
+- [ ] englische Übersetzung vollständig
 - Dateinamensumwandlungen
   - [ ] Umlaute (äöüß zu ae,ss...)
   - [ ] Leerzeichen zu Unterstrichen
