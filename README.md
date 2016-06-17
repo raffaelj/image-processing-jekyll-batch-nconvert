@@ -41,6 +41,31 @@ getestet mit Windows 7 und cmd.exe mit deutscher Sprach-Umgebung
 Jetzt starte die Datei `convert.bat`. Der Rest passiert automatisch.
 // Start `convert.bat` for automatic processing
 
+### Ordnerstruktur nach der Konvertierung // folder structure after conversion
+
+```
+ Urlaub in Prag/
+ +-- large/
+ |   +-- bild01.jpg
+ |   +-- bild...jpg
+ |   +-- bild99.jpg
+ +-- medium/
+ |   +-- bild01.jpg
+ |   +-- bild...jpg
+ |   +-- bild99.jpg
+ +-- original/
+ |   +-- bild01.jpg
+ |   +-- bild...jpg
+ |   +-- bild99.jpg
+ +-- tumbs/
+ |   +-- bild01.jpg
+ |   +-- bild...jpg
+ |   +-- bild99.jpg
+ +-- convert.bat
+ +-- Urlaub-in-Prag.md
+ +-- Urlaub-in-Prag.yml
+ +-- watermark.png
+```
 
 ## to do
 
