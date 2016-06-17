@@ -38,3 +38,15 @@ getestet mit Windows 7 und cmd.exe mit deutscher Sprach-Umgebung
 
 Jetzt starte die Datei "convert.bat". Der Rest passiert automatisch.
 // Start "convert.bat" for automatic processing
+
+
+## to do
+
+- Dateinamensumwandlungen
+  - [ ] Umlaute (äöüß zu ae,ss...)
+  - [ ] Leerzeichen zu Unterstrichen
+  - [ ] sonstige Sonderzeichen, die Windows erlaubt, aber nichts auf Webseiten zu suchen haben
+- generierte md-Datei sinnvoll anpassen
+  - [ ] Verlinkung von `thumbs` zu `large`
+  - [ ] Albumname als Unterordner einfügen
+- [ ] evtl. json-Datei erstellen
