@@ -3,6 +3,8 @@
 author: Raffael Jesche  
 license: free for all forever
 
+// most parts of this text are translated into English
+
 Anleitung und Kommentare sind auch im Script selbst vorhanden  
 getestet mit Windows 7 und cmd.exe mit deutscher Sprach-Umgebung  
 // you can find manual and comments in the script  
@@ -12,11 +14,15 @@ getestet mit Windows 7 und cmd.exe mit deutscher Sprach-Umgebung
  - /medium  500px breit // fixed width, default: 500px
  - /large   1000px breit // fixed width, default: 1000px
  - /thumbs  150 x 150px Thumbnails
- - folder-name.md-Datei mit Galerieliste
+ - index.md-Datei mit Galerieliste
  - folder-name.yml-Datei mit Galerieliste
 
 ## Voraussetzungen: // requirements
- - NConvert ist auf dem Computer vorhanden Download hier: http://www.xnview.com/de/nconvert/
+ - NConvert ist auf dem Computer vorhanden
+   - und liegt im Ordner `C:\ProgrammePortable\NConvert\nconvert.exe`
+   - --> oder du änderst den Pfad zu NConvert direkt im Script (1. Variable nach dem Info-Teil)
+   - --> // or define your path variable in the script. It's the first one after the info part.
+   - Download hier: http://www.xnview.com/de/nconvert/
  - Lege einen Ordner mit dem Namen des Fotoalbums an, z. B. "Urlaub in Prag".
    - Erstelle in diesem Ordner den Ordner `original` und lege dort alle Original-Bilder ab
  - Dieses Script `convert.bat` muss in den Foto-Ordner kopiert werden
@@ -87,5 +93,6 @@ galpath: /galerie
   - [ ] Sonderzeichen in Ordnernamen
 - generierte md-Datei sinnvoll anpassen
   - [x] Verlinkung von `thumbs` zu `large`
+  - [ ] `class="gallery"` und `data-lightbox="album_name"` setzen
 - [ ] verschachtelte Alben verarbeiten (z. B. /wunderland/malusion + /wunderland/wundersprueh + ...)
 - [ ] evtl. json-Datei erstellen

@@ -3,6 +3,7 @@
 :: 
 :: author: Raffael Jesche
 :: license: free for all forever
+:: source: https://github.com/raffaelj/image-processing-jekyll-batch-nconvert
 :: 
 :: # Umwandlung aller jpg-Dateien innerhalb eines Ordners in:
 ::  - /medium  500px breit // fixed width, default: 500px
@@ -17,10 +18,6 @@
 ::    - Erstelle in diesem Ordner den Ordner "original" und lege dort alle Original-Bilder ab
 ::  - Dieses Script (convert.bat) muss in den Foto-Ordner kopiert werden
 ::  - Wenn gewünscht, muss eine Wasserzeichen-Datei in den Foto-Ordner kopiert werden
-::  - Umlaute wie ä,ö,ü,ß mag das Script nicht. Die Dateiumwandlungen sollten zwar auch mit 
-::    Sonderzeichen funktionieren, aber die Textausgaben (.md u. .yml) müssen anschließend
-::    nochmal per Hand angepasst werden
-::  - Leerzeichen in Dateinamen sollten allgemein vermieden werden, funktionieren aber in der Umwandlung
 ::
 :: ## So sieht die Ordnerstruktur dann aus: // folder structure
 :: 
