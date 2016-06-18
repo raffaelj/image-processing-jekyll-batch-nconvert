@@ -18,13 +18,9 @@ getestet mit Windows 7 und cmd.exe mit deutscher Sprach-Umgebung
 ## Voraussetzungen: // requirements
  - NConvert ist auf dem Computer vorhanden Download hier: http://www.xnview.com/de/nconvert/
  - Lege einen Ordner mit dem Namen des Fotoalbums an, z. B. "Urlaub in Prag".
-   - Erstelle in diesem Ordner den Ordner "original" und lege dort alle Original-Bilder ab
- - Dieses Script (convert.bat) muss in den Foto-Ordner kopiert werden
+   - Erstelle in diesem Ordner den Ordner `original` und lege dort alle Original-Bilder ab
+ - Dieses Script `convert.bat` muss in den Foto-Ordner kopiert werden
  - Wenn gewünscht, muss eine Wasserzeichen-Datei in den Foto-Ordner kopiert werden
- - Umlaute wie ä,ö,ü,ß mag das Script nicht. Die Dateiumwandlungen sollten zwar auch mit 
-   Sonderzeichen funktionieren, aber die Textausgaben (.md u. .yml) müssen anschließend
-   nochmal per Hand angepasst werden
- - Leerzeichen in Dateinamen sollten allgemein vermieden werden, funktionieren aber in der Umwandlung
 
 ### So sieht die Ordnerstruktur dann aus: // folder structure
 
@@ -45,36 +41,51 @@ Jetzt starte die Datei `convert.bat`. Der Rest passiert automatisch.
 
 ```
  Urlaub in Prag/
- +-- large/
- |   +-- bild01.jpg
- |   +-- bild...jpg
- |   +-- bild99.jpg
- +-- medium/
- |   +-- bild01.jpg
- |   +-- bild...jpg
- |   +-- bild99.jpg
  +-- original/
  |   +-- bild01.jpg
  |   +-- bild...jpg
  |   +-- bild99.jpg
- +-- tumbs/
- |   +-- bild01.jpg
- |   +-- bild...jpg
- |   +-- bild99.jpg
+ +-- urlaub-in-prag/
+ |   +-- large/
+ |   |   +-- bild01.jpg
+ |   |   +-- bild...jpg
+ |   |   +-- bild99.jpg
+ |   +-- medium/
+ |   |   +-- bild01.jpg
+ |   |   +-- bild...jpg
+ |   |   +-- bild99.jpg
+ |   +-- thumbs/
+ |   |   +-- bild01.jpg
+ |   |   +-- bild...jpg
+ |   |   +-- bild99.jpg
+ |   +-- index.md
+ |   +-- urlaub-in-prag.yml
  +-- convert.bat
- +-- Urlaub-in-Prag.md
- +-- Urlaub-in-Prag.yml
  +-- watermark.png
+```
+
+### Copy Paste zu jekyll
+
+Der frisch erstellte Ordner kann nun direkt in den jekyll-Galerie-Ordner kopiert werden.
+
+Damit die generierten Links in der md-Datei funktonieren, muss zuvor der Ordner `galerie` erstellt worden sein und in der `config.yml` müssen folgende Variablen eingetragen sein:
+
+```yaml
+include:
+ - galerie
+ 
+galpath: /galerie
 ```
 
 ## to do
 
 - [ ] englische Übersetzung vollständig
 - Dateinamensumwandlungen
-  - [ ] Umlaute (äöüß zu ae,ss...)
-  - [ ] Leerzeichen zu Unterstrichen
-  - [ ] sonstige Sonderzeichen, die Windows erlaubt, aber nichts auf Webseiten zu suchen haben
+  - [x] Umlaute (äöüß zu ae,ss...)
+  - [x] Leerzeichen zu Minuszeichen
+  - [x] sonstige Sonderzeichen, die Windows erlaubt, aber nichts auf Webseiten zu suchen haben
+  - [ ] Sonderzeichen in Ordnernamen
 - generierte md-Datei sinnvoll anpassen
-  - [ ] Verlinkung von `thumbs` zu `large`
-  - [ ] Albumname als Unterordner einfügen
+  - [x] Verlinkung von `thumbs` zu `large`
+- [ ] verschachtelte Alben verarbeiten (z. B. /wunderland/malusion + /wunderland/wundersprueh + ...)
 - [ ] evtl. json-Datei erstellen
