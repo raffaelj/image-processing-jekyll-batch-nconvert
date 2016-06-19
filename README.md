@@ -74,14 +74,38 @@ Jetzt starte die Datei `convert.bat`. Der Rest passiert automatisch.
 
 Der frisch erstellte Ordner kann nun direkt in den jekyll-Galerie-Ordner kopiert werden.
 
-Damit die generierten Links in der md-Datei funktonieren, muss zuvor der Ordner `galerie` erstellt worden sein und in der `config.yml` müssen folgende Variablen eingetragen sein:
+Damit die generierten Links in der md-Datei funktonieren, muss zuvor der Ordner `_galerie` erstellt worden sein und in der `config.yml` müssen folgende Variablen eingetragen sein:
+
+config.yml
 
 ```yaml
-include:
- - galerie
- 
-galpath: /galerie
+galpath: /gallery
+
+collections:
+  gallery:
+    output: true
+    permalink: /gallery/:path/
 ```
+
+_layouts/gallery.html
+
+```
+---
+layout: default
+---
+
+{{ content }}
+
+<div class="gallery">
+{% for item in page.images %}
+  <a href="{{site.galpath}}{{page.album_folder}}/large/{{item.image}}" data-lightbox="{{ item.title }}">
+    <img alt="Bild" class="thumbs" src="{{site.galpath}}{{page.album_folder}}/thumbs/{{item.image}}" />
+  </a>
+{% endfor %}
+</div>
+
+```
+
 
 ## to do
 
@@ -90,9 +114,10 @@ galpath: /galerie
   - [x] Umlaute (äöüß zu ae,ss...)
   - [x] Leerzeichen zu Minuszeichen
   - [x] sonstige Sonderzeichen, die Windows erlaubt, aber nichts auf Webseiten zu suchen haben
-  - [ ] Sonderzeichen in Ordnernamen
+  - [ ] rename-submodule auch auf Ordner anwenden
+  - [x] prevent jekyll specific filename correlation https://help.github.com/articles/files-that-start-with-an-underscore-are-missing/
 - generierte md-Datei sinnvoll anpassen
   - [x] Verlinkung von `thumbs` zu `large`
-  - [ ] `class="gallery"` und `data-lightbox="album_name"` setzen
+  - [x] `class="gallery"` und `data-lightbox="album_name"` setzen --> via include und layout files
 - [ ] verschachtelte Alben verarbeiten (z. B. /wunderland/malusion + /wunderland/wundersprueh + ...)
 - [ ] evtl. json-Datei erstellen
