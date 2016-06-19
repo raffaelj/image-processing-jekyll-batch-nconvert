@@ -103,8 +103,10 @@ for /f "delims=" %%a in ('dir /a:-d /o:n /b %tempFolder%') do call :rename "%%a"
 goto :eof
 
 :rename
+
 set "oldname=%~nx1"
-set "newname=%oldname%"
+set "newname=%~n1"
+set "newnameExt=%~x1"
 
 set "newname=%newname: =-%"
 set "newname=%newname:)=-%"
@@ -125,6 +127,7 @@ set "newname=%newname:;=-%"
 set "newname=%newname:'=-%"
 set "newname=%newname:`=-%"
 set "newname=%newname:,=-%"
+set "newname=%newname:.=-%"
 
 set "newname=%newname:ä=ae%"
 set "newname=%newname:ö=oe%"
@@ -161,9 +164,17 @@ set "newname=%newname:X=x%"
 set "newname=%newname:Y=y%"
 set "newname=%newname:Z=z%"
 
+:: remove leading "-"
+for /f "tokens=* delims=-" %%b in ("%newname%") do set "newname=%%b"
+
+:: remove ending "-"
+setlocal EnableDelayedExpansion
+for /l %%c in (1,1,31) do if "!newname:~-1!"=="-" set newname=!newname:~0,-1!
+setlocal DisableDelayedExpansion
+
 ::echo ren temp\%1 "%newname%
-ren "%tempFolder%\%oldname%" "%newname%"
-echo file renamed from "%oldname%" to "%newname%"
+ren "%tempFolder%\%oldname%" "%newname%%newnameExt%"
+echo file renamed from "%oldname%" to "%newname%%newnameExt%"
 echo.
 
 goto :eof
@@ -205,7 +216,7 @@ goto :eof
 :: md-Datei erstellen // create .md
 
 ::set "mdName=%FolderName%"
-set "mdName=index"
+set "mdName=index_old"
 
 Type NUL >%FolderName%\%mdName%.md
 >>%FolderName%\%mdName%.md echo ---
@@ -220,6 +231,43 @@ echo created %mdName%.md
 for /F "tokens=*" %%f in ('dir /b %FolderName%\thumbs') do (
  >>%FolderName%\%mdName%.md echo [![Bild]^(%imgpath%/thumbs/%%f^)]^(%imgpath%/large/%%f^)
 )
+
+
+:: md-yaml-Datei erstellen // create yaml-md
+
+::set "mdName=%FolderName%"
+set "mdName=index"
+
+Type NUL >%FolderName%\%mdName%.md
+>>%FolderName%\%mdName%.md echo ---
+>>%FolderName%\%mdName%.md echo layout: gallery
+>>%FolderName%\%mdName%.md echo title: "%CurrDirName%"
+>>%FolderName%\%mdName%.md echo date: %date:~6,4%-%date:~3,2%-%date:~0,2%
+>>%FolderName%\%mdName%.md echo album_folder: /%FolderName%
+
+
+:: Bilderliste // image list
+
+>>%FolderName%\%mdName%.md echo images:
+
+for /F "tokens=*" %%f in ('dir /b %FolderName%\thumbs') do (
+:: >>%FolderName%\%mdName%.md echo [![Bild]^(%imgpath%/thumbs/%%f^)]^(%imgpath%/large/%%f^)
+ >>%FolderName%\%mdName%.md echo - image: %%f
+ >>%FolderName%\%mdName%.md echo   category: 
+ >>%FolderName%\%mdName%.md echo   project: 
+ 
+)
+
+
+
+>>%FolderName%\%mdName%.md echo ---
+::>>%FolderName%\%mdName%.md echo.
+echo created %mdName%.md
+
+
+
+
+
 
 :: yml-Datei erstellen // create .yml
 Type NUL >%FolderName%\%FolderName%.yml
