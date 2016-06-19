@@ -50,7 +50,7 @@ set "qualT=25"
 :: Pfad zur Wasserzeichen-Datei
 set "watermark=watermark.png"
 :: Transparenz des Wasserzeichens // opacity of watermark
-set "wmop=50"
+set "wmop=40"
 
 :: Pfad zu Bildern für jekyll-Dateien
 set "imgpath={{site.galpath}}{{page.album_folder}}"
@@ -63,7 +63,8 @@ echo Image processing for jekyll galleries
 echo =====================================
 echo.
 
-call :tempfiles
+call :vartempfiles
+call :copytempfiles
 call :renaming
 call :nconvert
 call :jekyll
@@ -71,7 +72,7 @@ call :removetempfiles
 goto :end
 
 
-:tempfiles
+:vartempfiles
 :: Name des Ordners, in dem die Batch-Datei liegt // current dir of batch file
 for %%* in (.) do set CurrDirName=%%~nx*
 
@@ -82,9 +83,13 @@ set "FolderName=%FolderName:ö=oe%"
 set "FolderName=%FolderName:ü=ue%"
 set "FolderName=%FolderName:ß=ss%"
 
+set "tempFolder=temp-copy-of-original"
+
+goto :eof
+
+:copytempfiles
 :: original in temp kopieren
 echo copy originals into temp folder...
-set "tempFolder=temp-copy-of-original"
 xcopy /i /y original %tempFolder%
 
 goto :eof
@@ -102,24 +107,24 @@ set "oldname=%~nx1"
 set "newname=%oldname%"
 
 set "newname=%newname: =-%"
-set "newname=%newname:)=_%"
-set "newname=%newname:(=_%"
-set "newname=%newname:&=_%"
-set "newname=%newname:^=_%"
-set "newname=%newname:$=_%"
-set "newname=%newname:#=_%"
-set "newname=%newname:@=_%"
-set "newname=%newname:!=_%"
-::set "newname=%newname:-=_%"
-set "newname=%newname:+=_%"
-set "newname=%newname:}=_%"
-set "newname=%newname:{=_%"
-set "newname=%newname:]=_%"
-set "newname=%newname:[=_%"
-set "newname=%newname:;=_%"
-set "newname=%newname:'=_%"
-set "newname=%newname:`=_%"
-set "newname=%newname:,=_%"
+set "newname=%newname:)=-%"
+set "newname=%newname:(=-%"
+set "newname=%newname:&=-%"
+set "newname=%newname:^=-%"
+set "newname=%newname:$=-%"
+set "newname=%newname:#=-%"
+set "newname=%newname:@=-%"
+set "newname=%newname:!=-%"
+::set "newname=%newname:-=-%"
+set "newname=%newname:+=-%"
+set "newname=%newname:}=-%"
+set "newname=%newname:{=-%"
+set "newname=%newname:]=-%"
+set "newname=%newname:[=-%"
+set "newname=%newname:;=-%"
+set "newname=%newname:'=-%"
+set "newname=%newname:`=-%"
+set "newname=%newname:,=-%"
 
 set "newname=%newname:ä=ae%"
 set "newname=%newname:ö=oe%"
@@ -198,26 +203,22 @@ goto :eof
 ::
 
 :: md-Datei erstellen // create .md
-::Type NUL >%FolderName%\%FolderName%.md
-::>>%FolderName%\%FolderName%.md echo ---
-::>>%FolderName%\%FolderName%.md echo title: "%CurrDirName%"
-::>>%FolderName%\%FolderName%.md echo date: %date:~6,4%-%date:~3,2%-%date:~0,2%
-::>>%FolderName%\%FolderName%.md echo album_folder: "%FolderName%/"
-::>>%FolderName%\%FolderName%.md echo ---
-::>>%FolderName%\%FolderName%.md echo.
-::echo created %FolderName%.md
-Type NUL >%FolderName%\index.md
->>%FolderName%\index.md echo ---
->>%FolderName%\index.md echo title: "%CurrDirName%"
->>%FolderName%\index.md echo date: %date:~6,4%-%date:~3,2%-%date:~0,2%
->>%FolderName%\index.md echo album_folder: /%FolderName%
->>%FolderName%\index.md echo ---
->>%FolderName%\index.md echo.
-echo created index.md
+
+::set "mdName=%FolderName%"
+set "mdName=index"
+
+Type NUL >%FolderName%\%mdName%.md
+>>%FolderName%\%mdName%.md echo ---
+>>%FolderName%\%mdName%.md echo title: "%CurrDirName%"
+>>%FolderName%\%mdName%.md echo date: %date:~6,4%-%date:~3,2%-%date:~0,2%
+>>%FolderName%\%mdName%.md echo album_folder: /%FolderName%
+>>%FolderName%\%mdName%.md echo ---
+>>%FolderName%\%mdName%.md echo.
+echo created %mdName%.md
 
 :: Bilderliste in Markdown // image list in markdown
 for /F "tokens=*" %%f in ('dir /b %FolderName%\thumbs') do (
- >>%FolderName%\index.md echo [![Bild]^(%imgpath%/thumbs/%%f^)]^(%imgpath%/large/%%f^)
+ >>%FolderName%\%mdName%.md echo [![Bild]^(%imgpath%/thumbs/%%f^)]^(%imgpath%/large/%%f^)
 )
 
 :: yml-Datei erstellen // create .yml
