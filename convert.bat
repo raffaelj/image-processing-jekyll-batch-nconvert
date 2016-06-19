@@ -242,6 +242,7 @@ Type NUL >%FolderName%\%mdName%.md
 >>%FolderName%\%mdName%.md echo ---
 >>%FolderName%\%mdName%.md echo layout: gallery
 >>%FolderName%\%mdName%.md echo title: "%CurrDirName%"
+>>%FolderName%\%mdName%.md echo permalink: /gallery/%FolderName%/
 >>%FolderName%\%mdName%.md echo date: %date:~6,4%-%date:~3,2%-%date:~0,2%
 >>%FolderName%\%mdName%.md echo album_folder: /%FolderName%
 
