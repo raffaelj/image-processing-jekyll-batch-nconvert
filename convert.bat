@@ -216,24 +216,25 @@ goto :eof
 :: md-Datei erstellen // create .md
 
 ::set "mdName=%FolderName%"
-set "mdName=index_old"
+:: set "mdName=index_old"
 
-Type NUL >%FolderName%\%mdName%.md
->>%FolderName%\%mdName%.md echo ---
->>%FolderName%\%mdName%.md echo title: "%CurrDirName%"
->>%FolderName%\%mdName%.md echo date: %date:~6,4%-%date:~3,2%-%date:~0,2%
->>%FolderName%\%mdName%.md echo album_folder: /%FolderName%
->>%FolderName%\%mdName%.md echo ---
->>%FolderName%\%mdName%.md echo.
-echo created %mdName%.md
+:: Type NUL >%FolderName%\%mdName%.md
+:: >>%FolderName%\%mdName%.md echo ---
+:: >>%FolderName%\%mdName%.md echo title: "%CurrDirName%"
+:: >>%FolderName%\%mdName%.md echo date: %date:~6,4%-%date:~3,2%-%date:~0,2%
+:: >>%FolderName%\%mdName%.md echo album_folder: /%FolderName%
+:: >>%FolderName%\%mdName%.md echo ---
+:: >>%FolderName%\%mdName%.md echo.
+:: echo created %mdName%.md
 
 :: Bilderliste in Markdown // image list in markdown
-for /F "tokens=*" %%f in ('dir /b %FolderName%\thumbs') do (
- >>%FolderName%\%mdName%.md echo [![Bild]^(%imgpath%/thumbs/%%f^)]^(%imgpath%/large/%%f^)
-)
+:: for /F "tokens=*" %%f in ('dir /b %FolderName%\thumbs') do (
+::  >>%FolderName%\%mdName%.md echo [![Bild]^(%imgpath%/thumbs/%%f^)]^(%imgpath%/large/%%f^)
+:: )
 
-
+::
 :: md-yaml-Datei erstellen // create yaml-md
+::
 
 ::set "mdName=%FolderName%"
 set "mdName=index"
@@ -246,35 +247,41 @@ Type NUL >%FolderName%\%mdName%.md
 >>%FolderName%\%mdName%.md echo date: %date:~6,4%-%date:~3,2%-%date:~0,2%
 >>%FolderName%\%mdName%.md echo album_folder: /%FolderName%
 
-
 :: Bilderliste // image list
-
 >>%FolderName%\%mdName%.md echo images:
 
 for /F "tokens=*" %%f in ('dir /b %FolderName%\thumbs') do (
-:: >>%FolderName%\%mdName%.md echo [![Bild]^(%imgpath%/thumbs/%%f^)]^(%imgpath%/large/%%f^)
  >>%FolderName%\%mdName%.md echo - image: %%f
  >>%FolderName%\%mdName%.md echo   category: 
  >>%FolderName%\%mdName%.md echo   project: 
- 
 )
-
-
 
 >>%FolderName%\%mdName%.md echo ---
-::>>%FolderName%\%mdName%.md echo.
+
 echo created %mdName%.md
 
-
-
-
-
-
+::
 :: yml-Datei erstellen // create .yml
+::
+
 Type NUL >%FolderName%\%FolderName%.yml
+
+>>%FolderName%\%FolderName%.yml echo title: "%CurrDirName%"
+>>%FolderName%\%FolderName%.yml echo permalink: /gallery/%FolderName%/
+>>%FolderName%\%FolderName%.yml echo date: %date:~6,4%-%date:~3,2%-%date:~0,2%
+>>%FolderName%\%FolderName%.yml echo album_folder: /%FolderName%
+
+:: Bilderliste // image list
+
+>>%FolderName%\%FolderName%.yml echo images:
+
 for /F "tokens=*" %%f in ('dir /b %FolderName%\thumbs') do (
- >>%FolderName%\%FolderName%.yml echo - %%f
+:: >>%FolderName%\%mdName%.md echo [![Bild]^(%imgpath%/thumbs/%%f^)]^(%imgpath%/large/%%f^)
+ >>%FolderName%\%FolderName%.yml echo - image: %%f
+ >>%FolderName%\%FolderName%.yml echo   category: 
+ >>%FolderName%\%FolderName%.yml echo   project: 
 )
+
 echo created %FolderName%.yml
 
 goto :eof
