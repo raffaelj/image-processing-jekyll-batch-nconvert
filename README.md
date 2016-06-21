@@ -109,6 +109,9 @@ layout: default
 
 ## to do
 
+- NConvert
+  - [ ] für Web optimieren (Metadaten löschen etc.)
+  - [x] Rotation nach Exif-Tag
 - [ ] englische Übersetzung vollständig
 - Dateinamensumwandlungen
   - [x] Umlaute (äöüß zu ae,ss...)

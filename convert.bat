@@ -3,57 +3,38 @@
 :: 
 :: author: Raffael Jesche
 :: license: free for all forever
-:: source: https://github.com/raffaelj/image-processing-jekyll-batch-nconvert
+:: source, docs and manual: https://github.com/raffaelj/image-processing-jekyll-batch-nconvert
 :: 
-:: # Umwandlung aller jpg-Dateien innerhalb eines Ordners in:
-::  - /medium  500px breit // fixed width, default: 500px
-::  - /large   1000px breit // fixed width, default: 1000px
-::  - /thumbs  150 x 150px Thumbnails
-::  - folder-name.md-Datei mit Galerieliste
-::  - folder-name.yml-Datei mit Galerieliste
-:: 
-:: # Voraussetzungen:
-::  - NConvert ist auf dem Computer vorhanden Download hier: http://www.xnview.com/de/nconvert/
-::  - Lege einen Ordner mit dem Namen des Fotoalbums an, z. B. "Urlaub in Prag".
-::    - Erstelle in diesem Ordner den Ordner "original" und lege dort alle Original-Bilder ab
-::  - Dieses Script (convert.bat) muss in den Foto-Ordner kopiert werden
-::  - Wenn gewünscht, muss eine Wasserzeichen-Datei in den Foto-Ordner kopiert werden
-::
-:: ## So sieht die Ordnerstruktur dann aus: // folder structure
-:: 
-::  Urlaub in Prag/
-::  +-- original/
-::  |   +-- bild01.jpg
-::  |   +-- bild...jpg
-::  |   +-- bild99.jpg
-::  +-- convert.bat
-::  +-- watermark.png
-:: 
-:: Jetzt starte die Datei "convert.bat". Der Rest passiert automatisch.
-:: // Start "convert.bat" for automatic processing
 
+:config
 :: 
 :: Variablen // variables
 ::
+
 :: Pfad zu NConvert setzen // path/to/NConvert
 set "nc=C:\ProgrammePortable\NConvert\nconvert.exe"
+
 :: Bildgröße // image sizes
 set "MediumX=500"
 set "MediumY=2000"
 set "LargeX=1000"
 set "LargeY=4000"
 set "ThumbsXY=150"
+
 :: jpg-Qualität // jpg quality
 set "qualM=40"
 set "qualL=40"
 set "qualT=25"
-:: Pfad zur Wasserzeichen-Datei
-set "watermark=watermark.png"
-:: Transparenz des Wasserzeichens // opacity of watermark
-set "wmop=40"
 
-:: Pfad zu Bildern für jekyll-Dateien
-set "imgpath={{site.galpath}}{{page.album_folder}}"
+:: Pfad zur Wasserzeichen-Datei
+::set "watermark=watermark.png"
+set "watermark=E:\github\gallerytest\watermark.png"
+
+:: Transparenz des Wasserzeichens // opacity of watermark
+set "wmop=25"
+
+:: Pfad zu Bildern für jekyll-Dateien (index_old.md) --> kann gelöscht werden
+::set "imgpath={{site.galpath}}{{page.album_folder}}"
 
 :start
 :: Umlaute richtig darstellen (cmd-default: 850) // German umlauts
@@ -186,6 +167,9 @@ goto :eof
 ::
 echo.
 
+:: Drehen nach Exif-Ausrichtung
+%nc% -overwrite -out jpeg -o %FolderName%\medium\%%.jpg -jpegtrans exif %tempFolder%\*.jpg
+
 :: medium, 500px breit, Qualität 40% // width: 500px
 %nc% -overwrite -out jpeg -o %FolderName%\medium\%%.jpg -ratio -rtype lanczos -resize %MediumX% %MediumY% -q %qualM% -wmflag center -wmopacity %wmop% -wmfile %watermark% %tempFolder%\*.jpg
 echo.
@@ -236,8 +220,8 @@ goto :eof
 :: md-yaml-Datei erstellen // create yaml-md
 ::
 
-::set "mdName=%FolderName%"
-set "mdName=index"
+set "mdName=%FolderName%"
+::set "mdName=index"
 
 Type NUL >%FolderName%\%mdName%.md
 >>%FolderName%\%mdName%.md echo ---
@@ -252,8 +236,10 @@ Type NUL >%FolderName%\%mdName%.md
 
 for /F "tokens=*" %%f in ('dir /b %FolderName%\thumbs') do (
  >>%FolderName%\%mdName%.md echo - image: %%f
+ >>%FolderName%\%mdName%.md echo   title: 
  >>%FolderName%\%mdName%.md echo   category: 
  >>%FolderName%\%mdName%.md echo   project: 
+ >>%FolderName%\%mdName%.md echo   caption: 
 )
 
 >>%FolderName%\%mdName%.md echo ---
@@ -276,10 +262,11 @@ Type NUL >%FolderName%\%FolderName%.yml
 >>%FolderName%\%FolderName%.yml echo images:
 
 for /F "tokens=*" %%f in ('dir /b %FolderName%\thumbs') do (
-:: >>%FolderName%\%mdName%.md echo [![Bild]^(%imgpath%/thumbs/%%f^)]^(%imgpath%/large/%%f^)
  >>%FolderName%\%FolderName%.yml echo - image: %%f
+ >>%FolderName%\%FolderName%.yml echo   title: 
  >>%FolderName%\%FolderName%.yml echo   category: 
  >>%FolderName%\%FolderName%.yml echo   project: 
+ >>%FolderName%\%FolderName%.yml echo   caption: 
 )
 
 echo created %FolderName%.yml
