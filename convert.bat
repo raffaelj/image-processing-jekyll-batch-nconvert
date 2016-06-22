@@ -237,6 +237,8 @@ Type NUL >%FolderName%\%mdName%.md
 for /F "tokens=*" %%f in ('dir /b %FolderName%\thumbs') do (
  >>%FolderName%\%mdName%.md echo - image: %%f
  >>%FolderName%\%mdName%.md echo   title: 
+ >>%FolderName%\%mdName%.md echo   date: 
+ >>%FolderName%\%mdName%.md echo   photographer: 
  >>%FolderName%\%mdName%.md echo   category: 
  >>%FolderName%\%mdName%.md echo   project: 
  >>%FolderName%\%mdName%.md echo   caption: 
@@ -264,6 +266,8 @@ Type NUL >%FolderName%\%FolderName%.yml
 for /F "tokens=*" %%f in ('dir /b %FolderName%\thumbs') do (
  >>%FolderName%\%FolderName%.yml echo - image: %%f
  >>%FolderName%\%FolderName%.yml echo   title: 
+ >>%FolderName%\%FolderName%.yml echo   date: 
+ >>%FolderName%\%FolderName%.yml echo   photographer: 
  >>%FolderName%\%FolderName%.yml echo   category: 
  >>%FolderName%\%FolderName%.yml echo   project: 
  >>%FolderName%\%FolderName%.yml echo   caption: 
