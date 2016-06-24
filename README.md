@@ -64,7 +64,7 @@ Jetzt starte die Datei `convert.bat`. Der Rest passiert automatisch.
  |   |   +-- bild01.jpg
  |   |   +-- bild...jpg
  |   |   +-- bild99.jpg
- |   +-- index.md
+ |   +-- urlaub-in-prag.md
  |   +-- urlaub-in-prag.yml
  +-- convert.bat
  +-- watermark.png

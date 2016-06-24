@@ -36,6 +36,12 @@ set "wmop=25"
 :: Pfad zu Bildern für jekyll-Dateien (index_old.md) --> kann gelöscht werden
 ::set "imgpath={{site.galpath}}{{page.album_folder}}"
 
+:: Unterordner für Permalink in yaml (wenn kein Unterordner, einfach leer lassen)
+:: wenn Unterordner, dann mit schließendem /
+:: z. B.
+:: set "subFolder=wunderland/"
+set "subFolder="
+
 :start
 :: Umlaute richtig darstellen (cmd-default: 850) // German umlauts
 chcp 1252
@@ -168,7 +174,7 @@ goto :eof
 echo.
 
 :: Drehen nach Exif-Ausrichtung
-%nc% -overwrite -out jpeg -o %FolderName%\medium\%%.jpg -jpegtrans exif %tempFolder%\*.jpg
+%nc% -overwrite -out jpeg -o %tempFolder%\%%.jpg -jpegtrans exif %tempFolder%\*.jpg
 
 :: medium, 500px breit, Qualität 40% // width: 500px
 %nc% -overwrite -out jpeg -o %FolderName%\medium\%%.jpg -ratio -rtype lanczos -resize %MediumX% %MediumY% -q %qualM% -wmflag center -wmopacity %wmop% -wmfile %watermark% %tempFolder%\*.jpg
@@ -227,22 +233,23 @@ Type NUL >%FolderName%\%mdName%.md
 >>%FolderName%\%mdName%.md echo ---
 >>%FolderName%\%mdName%.md echo layout: gallery
 >>%FolderName%\%mdName%.md echo title: "%CurrDirName%"
->>%FolderName%\%mdName%.md echo permalink: /gallery/%FolderName%/
+>>%FolderName%\%mdName%.md echo gallery: %subFolder%%FolderName%
+>>%FolderName%\%mdName%.md echo permalink: /gallery/%subFolder%%FolderName%/
 >>%FolderName%\%mdName%.md echo date: %date:~6,4%-%date:~3,2%-%date:~0,2%
->>%FolderName%\%mdName%.md echo album_folder: /%FolderName%
+::>>%FolderName%\%mdName%.md echo album_folder: /%subFolder%%FolderName%
 
 :: Bilderliste // image list
->>%FolderName%\%mdName%.md echo images:
+::>>%FolderName%\%mdName%.md echo images:
 
-for /F "tokens=*" %%f in ('dir /b %FolderName%\thumbs') do (
- >>%FolderName%\%mdName%.md echo - image: %%f
- >>%FolderName%\%mdName%.md echo   title: 
- >>%FolderName%\%mdName%.md echo   date: 
- >>%FolderName%\%mdName%.md echo   photographer: 
- >>%FolderName%\%mdName%.md echo   category: 
- >>%FolderName%\%mdName%.md echo   project: 
- >>%FolderName%\%mdName%.md echo   caption: 
-)
+::for /F "tokens=*" %%f in ('dir /b %FolderName%\thumbs') do (
+:: >>%FolderName%\%mdName%.md echo - image: %%f
+:: >>%FolderName%\%mdName%.md echo   title: 
+:: >>%FolderName%\%mdName%.md echo   date: 
+:: >>%FolderName%\%mdName%.md echo   photographer: 
+:: >>%FolderName%\%mdName%.md echo   category: 
+:: >>%FolderName%\%mdName%.md echo   project: 
+:: >>%FolderName%\%mdName%.md echo   caption: 
+::)
 
 >>%FolderName%\%mdName%.md echo ---
 
@@ -255,9 +262,10 @@ echo created %mdName%.md
 Type NUL >%FolderName%\%FolderName%.yml
 
 >>%FolderName%\%FolderName%.yml echo title: "%CurrDirName%"
->>%FolderName%\%FolderName%.yml echo permalink: /gallery/%FolderName%/
+>>%FolderName%\%FolderName%.yml echo permalink: /gallery/%subFolder%%FolderName%/
 >>%FolderName%\%FolderName%.yml echo date: %date:~6,4%-%date:~3,2%-%date:~0,2%
->>%FolderName%\%FolderName%.yml echo album_folder: /%FolderName%
+>>%FolderName%\%FolderName%.yml echo album_folder: /%subFolder%%FolderName%
+>>%FolderName%\%FolderName%.yml echo description: 
 
 :: Bilderliste // image list
 
@@ -268,6 +276,7 @@ for /F "tokens=*" %%f in ('dir /b %FolderName%\thumbs') do (
  >>%FolderName%\%FolderName%.yml echo   title: 
  >>%FolderName%\%FolderName%.yml echo   date: 
  >>%FolderName%\%FolderName%.yml echo   photographer: 
+ >>%FolderName%\%FolderName%.yml echo   geolocation: 
  >>%FolderName%\%FolderName%.yml echo   category: 
  >>%FolderName%\%FolderName%.yml echo   project: 
  >>%FolderName%\%FolderName%.yml echo   caption: 
