@@ -122,5 +122,7 @@ layout: default
 - generierte md-Datei sinnvoll anpassen
   - [x] Verlinkung von `thumbs` zu `large`
   - [x] `class="gallery"` und `data-lightbox="album_name"` setzen --> via include und layout files
+- generierte yml-Datei
+  - [ ] Exif-Daten auslesen und mit in .yml speichern
 - [ ] verschachtelte Alben verarbeiten (z. B. /wunderland/malusion + /wunderland/wundersprueh + ...)
 - [ ] evtl. json-Datei erstellen
