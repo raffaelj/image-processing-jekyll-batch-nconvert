@@ -234,7 +234,7 @@ Type NUL >%FolderName%\%mdName%.md
 >>%FolderName%\%mdName%.md echo layout: gallery
 >>%FolderName%\%mdName%.md echo title: "%CurrDirName%"
 >>%FolderName%\%mdName%.md echo gallery: %subFolder%%FolderName%
->>%FolderName%\%mdName%.md echo permalink: /gallery/%subFolder%%FolderName%/
+>>%FolderName%\%mdName%.md echo permalink: /galerie/%subFolder%%FolderName%/
 >>%FolderName%\%mdName%.md echo date: %date:~6,4%-%date:~3,2%-%date:~0,2%
 ::>>%FolderName%\%mdName%.md echo album_folder: /%subFolder%%FolderName%
 
@@ -262,10 +262,14 @@ echo created %mdName%.md
 Type NUL >%FolderName%\%FolderName%.yml
 
 >>%FolderName%\%FolderName%.yml echo title: "%CurrDirName%"
->>%FolderName%\%FolderName%.yml echo permalink: /gallery/%subFolder%%FolderName%/
+>>%FolderName%\%FolderName%.yml echo permalink: /galerie/%subFolder%%FolderName%/
 >>%FolderName%\%FolderName%.yml echo date: %date:~6,4%-%date:~3,2%-%date:~0,2%
+>>%FolderName%\%FolderName%.yml echo date_from: 
+>>%FolderName%\%FolderName%.yml echo date_to: 
+>>%FolderName%\%FolderName%.yml echo geolocation: 
+>>%FolderName%\%FolderName%.yml echo project: 
 >>%FolderName%\%FolderName%.yml echo album_folder: /%subFolder%%FolderName%
->>%FolderName%\%FolderName%.yml echo description: 
+>>%FolderName%\%FolderName%.yml echo description: ""
 
 :: Bilderliste // image list
 
@@ -273,9 +277,10 @@ Type NUL >%FolderName%\%FolderName%.yml
 
 for /F "tokens=*" %%f in ('dir /b %FolderName%\thumbs') do (
  >>%FolderName%\%FolderName%.yml echo - image: %%f
- >>%FolderName%\%FolderName%.yml echo   title: 
+ >>%FolderName%\%FolderName%.yml echo   title: ""
  >>%FolderName%\%FolderName%.yml echo   date: 
  >>%FolderName%\%FolderName%.yml echo   photographer: 
+ >>%FolderName%\%FolderName%.yml echo   photographer_url: ""
  >>%FolderName%\%FolderName%.yml echo   geolocation: 
  >>%FolderName%\%FolderName%.yml echo   category: 
  >>%FolderName%\%FolderName%.yml echo   project: 
